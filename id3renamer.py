@@ -74,14 +74,13 @@ class ID3Renamer(object):
     def _getID3Name(self, old_name):
         id3r = id3reader.Reader(old_name)
 
-        track_number = id3r.getValue('track') or "0"
-        track_number = track_number.split("/")[0]
+        separador = "-"
         track_artist = id3r.getValue('performer')
         track_artist = track_artist
         title = id3r.getValue('title') or "No title"
         title = title.strip()
 
-        return self.to_ascii("%s %s %s.mp3" % (track_number.zfill(2), track_artist, title))
+        return self.to_ascii("%s %s %s.mp3" % (track_artist, separador, title))
 
     def rename_file(self, name, root):
         if name.lower().endswith(".mp3"):
