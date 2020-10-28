@@ -17,7 +17,13 @@ import unicodedata
 # You'll need a copy of Ned Batchelder's id3reader:
 # 
 # http://nedbatchelder.com/code/modules/id3reader.html
-                
+
+# Reaplace illegal chars
+illegal_chars = u'/\?=+<>:;"*|!@#$%^&*,'
+
+def replace_illegal_chars(raw):
+    return ''.join([c in illegal_chars and '_' or c for c in raw])
+
 _desc = """Walk a directory recursively and rename each MP3 found according to
 its ID3 tags."""
 
@@ -79,7 +85,9 @@ class ID3Renamer(object):
         track_artist = track_artist
         title = id3r.getValue('title') or "No title"
         title = title.strip()
-
+        track_artist = replace_illegal_chars(track_artist)
+        title = replace_illegal_chars(title)
+        
         return self.to_ascii("%s %s %s.mp3" % (track_artist, separador, title))
 
     def rename_file(self, name, root):
