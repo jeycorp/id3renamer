@@ -116,7 +116,6 @@ class ID3Renamer(object):
                 except:
                     FileError = root + name
                     print "O arquivo " + FileError + " esta com pau e foi removido"
-                    os.remove (FileError)
                  
 if __name__ == '__main__':
     args = buildParser().parse_args()
