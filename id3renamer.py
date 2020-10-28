@@ -103,8 +103,13 @@ class ID3Renamer(object):
      
         for root, dir_name, names in os.walk(self.path):
             for name in names:
-                self.rename_file(name, root)
-                
+                try:
+                    self.rename_file(name, root)
+                except:
+                    FileError = root + name
+                    print "O arquivo " + FileError + " esta com pau e foi removido"
+                    os.remove (FileError)
+                 
 if __name__ == '__main__':
     args = buildParser().parse_args()
     renamer = ID3Renamer(args.path, 
